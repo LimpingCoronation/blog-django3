@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container text-center" style="margin-top: 5em;">
+        <p><h2>Регистрация</h2></p>
+    </div>
+    {% if error %}
+        <div class="container">
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        </div>
+    {% endif %}
+    <div class="container text-center">
+        <form action="{% url 'signupuser' %}" method="POST">
+            {% csrf_token %}
+            <p>Логин: </p>
+            <p><input type="text" name="username" maxlength="100"></p>
+            <p>Пароль: </p>
+            <p><input type="password" name="password1"></p>
+            <p>Повторите пароль: </p>
+            <p><input type="password" name="password2"></p>
+            <p><button type="submit" class="btn btn-success">Зарегистрироваться</button></p>
+        </form>
+    </div>
+{% endblock %}

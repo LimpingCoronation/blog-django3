@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container text-center" style="margin-top: 5em;">
+        {% if articles %}
+            {% for article in articles %}
+                <div style="margin-top: 5em; border: solid; border-radius: 5px;">
+                    <p><h3>{{ article.title }}</h3></p>
+                    {% if article.image %}
+                        <p><img src="{{ article.image.url }}" alt="Не найдено" width="200em" height="200em"></p>
+                    {% endif %}
+                    <p>{{ article.text|truncatechars:100 }}</p>
+                    <p><a href="{% url 'articleview' article.id %}">Перейти</a></p>
+                    <p><a href="{% url 'update' article.id %}" class="btn btn-primary">Изменить</a></p>
+                    <form action="{% url 'delete' article.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" style="margin-bottom: 1em;">Удалить</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p><h2>У вас нет постов...</h2></p>
+        {% endif %}
+    </div>
+{% endblock %}

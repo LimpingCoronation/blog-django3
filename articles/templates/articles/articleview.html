@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container text-center" style="margin-top: 5em;">
+        <p><h2>{{ article.title }}</h2></p>
+        {% if article.image %}
+            <p><img src="{{ article.image.url }}" alt="Не найдено" width="300rem" height="300rem"></p>
+        {% endif %}
+        <p>{{ article.text }}</p>
+        <p>Автор: {{ article.author.username }}</p>
+        <p>Опубликовано: <em>{{ article.pub_date }}</em></p>
+        <p><a href="{% url 'home' %}">На главную</a></p>
+        <hr>
+    </div>
+    <div class="container">
+        <p><h4>Комментарии</h4></p>
+            {% if error %}
+                <div class="container">
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                </div>
+            {% endif %}
+            <form action="{% url 'articleview' article.id %}" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Отправить</button>
+            </form>
+            <hr>
+            <br>
+            {% for comment in comments %}
+                <div class="comment">
+                    <p><strong>{{ comment.author }}</strong></p>
+                    <p>{{ comment.text }}</p>
+                    <p><em>{{ comment.pub_date }}</em></p>
+                    {% if comment.author == request.user %}
+                        <form action="{% url 'deletecomment' comment.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </form>
+                    {% endif %}
+                    <hr>
+                </div>
+            {% endfor %}
+    </div>
+{% endblock %}

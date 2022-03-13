@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container text-center" style="margin-top: 5em;">
+        <p><h2>Вход</h2></p>
+        {% if error %}
+    </div>
+    {% if error %}
+        <div class="container">
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        </div>
+    {% endif %}
+    <div class="container text-center">
+        {% endif %}
+        <form action="{% url 'loginuser' %}" method="POST">
+            {% csrf_token %}
+            <p>Логин: </p>
+            <p><input type="text" name="username" maxlength="100"></p>
+            <p>Пароль: </p>
+            <p><input type="password" name="password"></p>
+            <p><button type="submit" class="btn btn-success">Войти</button></p>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container text-center center-block" style="margin-top: 5em;">
+            {% for article in articles %}
+                <div style="margin-top: 5em; border: solid; border-radius: 5px;">
+                    {% if article.image %}
+                        <p style="margin-top: 1em;"><img src="{{ article.image.url }}" alt="Не найдено" width="200" height="200"></p>
+                    {% endif %}
+                    <p><h5 class="card-title">{{ article.title }}</h5></p>
+                    <p>{{ article.text|truncatechars:100 }}</p>
+                    <p><a href="{% url 'articleview' article.id %}" class="btn btn-primary">Перейти</a></p>
+                    <p><small class="text-muted">{{ article.pub_date }}</small></p>
+                </div>
+            {% endfor %}
+    </div>
+{% endblock %}
